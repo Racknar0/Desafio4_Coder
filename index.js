@@ -1,5 +1,4 @@
 const express = require('express');
-const useragent = require('express-useragent');
 const path = require('path');
 const bodyParser = require('body-parser');
 
@@ -11,11 +10,15 @@ app.use(bodyParser.json());
 const PORT = process.env.PORT;
 const ENV = process.env.NODE_ENV;
 
+//! view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/api', express.static(path.join(__dirname, 'public'))) //! aca se declaran los archivos estaticos
+/* app.use('/', express.static(path.join(__dirname, 'public'))) //! aca se declaran los archivos estaticos */
 
-app.use('/api', productos);
+app.use('/', productos);
 
 //! Middleware de manejo de errores
 app.use(function (err, req, res, next) {
